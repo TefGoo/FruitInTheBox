@@ -107,7 +107,7 @@ public class LeverRotation : MonoBehaviour
             if (remainingTime <= 0)
             {
                 // If remaining time is not set, select a random duration.
-                timerDuration = Random.Range(10.0f, 14.0f);
+                timerDuration = Random.Range(11.0f, 12.0f);
             }
             timer = remainingTime > 0 ? remainingTime : timerDuration;
         }

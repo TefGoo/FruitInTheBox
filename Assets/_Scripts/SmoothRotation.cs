@@ -8,16 +8,21 @@ public class SmoothRotationWithSound : MonoBehaviour
     public AudioClip rotationSound; // Attach your sound effect here
 
     private AudioSource audioSource;
+    private LeverRotation leverScript;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
+        leverScript = FindObjectOfType<LeverRotation>();
 
-        // Invoke the RotateObject method after a delay of 1 second.
-        Invoke("RotateObject", 1f);
+        // Subscribe to the event to rotate the object when the timer reaches 0.
+        if (leverScript != null)
+        {
+            leverScript.SelectEndingEvent += OnSelectEnding;
+        }
     }
 
-    void RotateObject()
+    void OnSelectEnding()
     {
         // Play the sound effect before rotating.
         if (rotationSound != null && audioSource != null)
