@@ -7,7 +7,7 @@ public class LeverRotation : MonoBehaviour
     public AudioClip crankSound;
     public Text timerText;
 
-    private bool isGrabbed = false;
+    public bool isGrabbed = false;
     private bool isTimerRunning = false;
     private float timerDuration;
     public float timer;

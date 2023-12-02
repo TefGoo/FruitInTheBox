@@ -1006,6 +1006,7 @@ GameObject:
   - component: {fileID: 330585545}
   - component: {fileID: 330585544}
   - component: {fileID: 330585547}
+  - component: {fileID: 330585548}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1131,6 +1132,20 @@ MonoBehaviour:
     mipBias: 0
     varianceClampScale: 0.9
     contrastAdaptiveSharpening: 0
+--- !u!114 &330585548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9f1fdc211db5ebc4cbdc86137cfc4068, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leverRotation: {fileID: 1825337192}
+  forwardSpeed: 0.24
 --- !u!43 &388054886
 Mesh:
   m_ObjectHideFlags: 0
@@ -5393,6 +5408,7 @@ MonoBehaviour:
   rotationSpeed: 175
   crankSound: {fileID: 8300000, guid: 964c0821e3a69764d97a3a0642c86844, type: 3}
   timerText: {fileID: 929723623}
+  isGrabbed: 0
   timer: 0
 --- !u!82 &1825337193
 AudioSource:
