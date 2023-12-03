@@ -12,75 +12,83 @@ public class LeverRotation : MonoBehaviour
     private float timerDuration;
     public float timer;
     private float remainingTime;
+    private bool canRotate = true;
 
     private AudioSource audioSource;
 
     public delegate void SelectEndingDelegate();
     public event SelectEndingDelegate SelectEndingEvent;
+    public CameraMovement cameraMovement;
 
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         audioSource.clip = crankSound;
+        cameraMovement = FindObjectOfType<CameraMovement>();
     }
 
     void Update()
     {
-        if (isGrabbed)
+        if (canRotate)
         {
-            // Rotate the lever in the negative Z-axis.
-            transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+            if (isGrabbed)
+            {
+                // Rotate the lever in the negative Z-axis.
+                transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
 
-            if (!audioSource.isPlaying)
-            {
-                audioSource.Play();
-            }
-        }
-        else
-        {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Pause();
-            }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            if (!isGrabbed)
-            {
-                isGrabbed = true;
                 if (!audioSource.isPlaying)
                 {
-                    audioSource.UnPause();
-                }
-
-                if (!isTimerRunning)
-                {
-                    StartTimer();
+                    audioSource.Play();
                 }
             }
-        }
+            else
+            {
+                if (audioSource.isPlaying)
+                {
+                    audioSource.Pause();
+                }
+            }
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isGrabbed = false;
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (!isGrabbed)
+                {
+                    isGrabbed = true;
+                    if (!audioSource.isPlaying)
+                    {
+                        audioSource.UnPause();
+                    }
+
+                    if (!isTimerRunning)
+                    {
+                        StartTimer();
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                isGrabbed = false;
+                if (isTimerRunning)
+                {
+                    PauseTimer();
+                }
+            }
+
             if (isTimerRunning)
             {
-                PauseTimer();
-            }
-        }
+                timer -= Time.deltaTime;
+                if (timer <= 0)
+                {
+                    isTimerRunning = false;
+                    Debug.Log("Time's up");
+                    SelectEnding(); // Call the function to select the ending.
+                    canRotate = false;
+                    cameraMovement.enabled = false;
+                }
 
-        if (isTimerRunning)
-        {
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                isTimerRunning = false;
-                Debug.Log("Time's up");
-                SelectEnding(); // Call the function to select the ending.
+                timerText.text = "Time: " + timer.ToString("F1");
             }
-
-            timerText.text = "Time: " + timer.ToString("F1");
         }
     }
 
@@ -107,7 +115,7 @@ public class LeverRotation : MonoBehaviour
             if (remainingTime <= 0)
             {
                 // If remaining time is not set, select a random duration.
-                timerDuration = Random.Range(11.0f, 12.0f);
+                timerDuration = Random.Range(12.2f, 13.1f);
             }
             timer = remainingTime > 0 ? remainingTime : timerDuration;
         }
@@ -134,5 +142,10 @@ public class LeverRotation : MonoBehaviour
         {
             SelectEndingEvent.Invoke();
         }
+    }
+    public void ResetGame()
+    {
+        // Reset game state
+        canRotate = true; // Enable lever rotation when resetting the game
     }
 }
