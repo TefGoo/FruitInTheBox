@@ -6,6 +6,7 @@ public class EndingManager : MonoBehaviour
 {
     public GameObject panel1; // Reference to Panel 1 in the Inspector.
     public GameObject panel2; // Reference to Panel 2 in the Inspector.
+    public GameObject panel3; // Reference to Panel 3 in the Inspector.
     public GameObject goodEndingPrefab; // Reference to the prefab for the good ending.
     public GameObject badEndingPrefab; // Reference to the prefab for the bad ending.
 
@@ -34,6 +35,7 @@ public class EndingManager : MonoBehaviour
         {
             ShowPanel(panel2);
             SpawnPrefab(badEndingPrefab);
+            StartCoroutine(ShowPanelWithDelay(panel3, 0.2f));
         }
     }
     void ShowPanel(GameObject panel)
